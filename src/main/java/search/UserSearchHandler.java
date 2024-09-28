@@ -42,6 +42,8 @@ import java.util.List;
 
 public class UserSearchHandler implements OnRequestCallback {
     private static final String ENDPOINT = "/documents_search";
+
+    // TODO: S3 버킷의 주소로 변경
     private static final String DOCUMENTS_LOCATION = "books";
     private final ObjectMapper objectMapper;
     private final WebClient client;
