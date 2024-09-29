@@ -37,14 +37,15 @@ import networking.WebClient;
 import org.apache.zookeeper.KeeperException;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.net.URLDecoder.decode;
+
 public class UserSearchHandler implements OnRequestCallback {
     private static final String ENDPOINT = "/documents_search";
-
-    // TODO: S3 버킷의 주소로 변경
-    private static final String DOCUMENTS_LOCATION = "books";
+    private static final String DOCUMENTS_LOCATION = "http://tf-idf-document-search-documents.s3.amazonaws.com";
     private final ObjectMapper objectMapper;
     private final WebClient client;
     private final ServiceRegistry searchCoordinatorRegistry;
@@ -127,7 +128,7 @@ public class UserSearchHandler implements OnRequestCallback {
     }
 
     private static String getDocumentTitle(String document) {
-        return document.split("\\.")[0];
+        return decode(document.split("\\.")[0], StandardCharsets.UTF_8);
     }
 
     private static int normalizeScore(double inputScore, double maxScore) {
