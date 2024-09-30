@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.google.protobuf.InvalidProtocolBufferException;
+import io.github.cdimascio.dotenv.Dotenv;
 import model.frontend.FrontendSearchRequest;
 import model.frontend.FrontendSearchResponse;
 import model.proto.SearchModel;
@@ -45,10 +46,15 @@ import static java.net.URLDecoder.decode;
 
 public class UserSearchHandler implements OnRequestCallback {
     private static final String ENDPOINT = "/documents_search";
-    private static final String DOCUMENTS_LOCATION = "http://tf-idf-document-search-documents.s3.amazonaws.com";
+    private static final String DOCUMENTS_LOCATION;
     private final ObjectMapper objectMapper;
     private final WebClient client;
     private final ServiceRegistry searchCoordinatorRegistry;
+
+    static {
+        Dotenv dotenv = Dotenv.load();
+        DOCUMENTS_LOCATION = dotenv.get("DOCUMENTS_LOCATION");
+    }
 
     public UserSearchHandler(ServiceRegistry searchCoordinatorRegistry) {
         this.searchCoordinatorRegistry = searchCoordinatorRegistry;

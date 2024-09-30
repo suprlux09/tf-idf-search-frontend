@@ -23,6 +23,7 @@
  */
 
 import cluster.management.ServiceRegistry;
+import io.github.cdimascio.dotenv.Dotenv;
 import networking.WebServer;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
@@ -37,9 +38,14 @@ import java.io.IOException;
  */
 public class Application implements Watcher {
     //TODO: zookeeper address 수정
-    private static final String ZOOKEEPER_ADDRESS = "localhost:2181";
+    private static final String ZOOKEEPER_ADDRESS;
     private static final int SESSION_TIMEOUT = 3000;
     private ZooKeeper zooKeeper;
+
+    static {
+        Dotenv dotenv = Dotenv.load();
+        ZOOKEEPER_ADDRESS = dotenv.get("ZOOKEEPER_ADDRESS");
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         int currentServerPort = 9000;
