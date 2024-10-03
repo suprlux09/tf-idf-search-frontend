@@ -61,6 +61,7 @@ public class ServiceRegistry implements Watcher {
 
         for (String cluster : clusters) {
             if (!"zookeeper".equals(cluster)) {
+                cluster = "/" + cluster;
                 List<String> coordinators = zooKeeper.getChildren(cluster + COORDINATORS_REGISTRY_ZNODE, this);
 
                 for (String coordinator : coordinators) {
