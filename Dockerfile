@@ -1,5 +1,5 @@
 FROM openjdk:11
-ARG JAR_FILE=build/libs/*jar-with-dependencies.jar
+ARG JAR_FILE=target/*jar-with-dependencies.jar
 COPY ${JAR_FILE} app.jar
 COPY .env .env
 ENTRYPOINT ["java","-jar","/app.jar"]
