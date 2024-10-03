@@ -159,6 +159,7 @@ public class UserSearchHandler implements OnRequestCallback {
 
         try {
             String coordinatorAddress = searchCoordinatorRegistry.getRandomServiceAddress();
+            System.out.println("Request is sent to " + coordinatorAddress);
             if (coordinatorAddress == null) {
                 System.out.println("Search Cluster Coordinator is unavailable");
                 return SearchModel.Response.getDefaultInstance();

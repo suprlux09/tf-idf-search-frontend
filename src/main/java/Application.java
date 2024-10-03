@@ -37,7 +37,6 @@ import java.io.IOException;
  * Search Web Application - Distributed Search Part 3
  */
 public class Application implements Watcher {
-    //TODO: zookeeper address 수정
     private static final String ZOOKEEPER_ADDRESS;
     private static final int SESSION_TIMEOUT = 3000;
     private ZooKeeper zooKeeper;
@@ -55,7 +54,7 @@ public class Application implements Watcher {
         Application application = new Application();
         ZooKeeper zooKeeper = application.connectToZookeeper();
 
-        ServiceRegistry coordinatorsServiceRegistry = new ServiceRegistry(zooKeeper, ServiceRegistry.COORDINATORS_REGISTRY_ZNODE);
+        ServiceRegistry coordinatorsServiceRegistry = new ServiceRegistry(zooKeeper);
 
         UserSearchHandler searchHandler = new UserSearchHandler(coordinatorsServiceRegistry);
         WebServer webServer = new WebServer(currentServerPort, searchHandler);
