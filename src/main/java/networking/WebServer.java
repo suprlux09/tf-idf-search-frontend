@@ -66,7 +66,7 @@ public class WebServer {
         HttpContext homePageContext = server.createContext(HOME_PAGE_ENDPOINT);
         homePageContext.setHandler(this::handleRequestForAsset);
 
-        server.setExecutor(Executors.newFixedThreadPool(8));
+        server.setExecutor(Executors.newFixedThreadPool(15));
         server.start();
     }
 
