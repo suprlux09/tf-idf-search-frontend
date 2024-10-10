@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Executors;
 
 public class WebServer {
@@ -115,7 +118,21 @@ public class WebServer {
             return;
         }
 
+        String threadName = Thread.currentThread().getName();
+        long threadId = Thread.currentThread().getId();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startTime = LocalDateTime.now();
+        System.out.println("[" + threadName + " (ID: " + threadId + ")] 프론트엔드 작업 시작 시각: " + startTime.format(formatter));
+
         byte[] responseBytes = requestCallback.handleRequest(exchange.getRequestBody().readAllBytes());
+
+        LocalDateTime endTime = LocalDateTime.now();
+        System.out.println("[" + threadName + " (ID: " + threadId + ")] 프론트엔드 작업 완료 시각: " + endTime.format(formatter));
+        Duration duration = Duration.between(startTime, endTime);
+        long seconds = duration.getSeconds();
+        long millis = duration.toMillisPart();
+        System.out.println("[" + threadName + " (ID: " + threadId + ")] 프론트엔드 작업 소요 시간: " + seconds + "s " + millis + "ms");
+
 
         sendResponse(responseBytes, exchange);
     }

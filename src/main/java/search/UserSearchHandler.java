@@ -165,6 +165,10 @@ public class UserSearchHandler implements OnRequestCallback {
                 return SearchModel.Response.getDefaultInstance();
             }
 
+            String threadName = Thread.currentThread().getName();
+            long threadId = Thread.currentThread().getId();
+            System.out.println("[" + threadName + " (ID: " + threadId + ")] master " + coordinatorAddress + "로 작업 전송");
+
             byte[] payloadBody = client.sendTask(coordinatorAddress, searchRequest.toByteArray()).join();
 
             return SearchModel.Response.parseFrom(payloadBody);
